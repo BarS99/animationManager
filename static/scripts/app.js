@@ -1,0 +1,5 @@
+class AnimationManager {
+    constructor() {
+
+    }
+}

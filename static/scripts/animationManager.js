@@ -5,7 +5,7 @@ class AnimationManager {
 
     /**
      * Sets property values before the animation is executed. Returns the reference to this (AnimationManager).
-     * @param {string} _targets - Targets as a Node List.
+     * @param {HTMLElement} _targets - Targets as a Node List.
      * @param {object} _rules - Rules to be applied as an Object.
      */
     from = (_targets, _rules) => {
@@ -26,16 +26,17 @@ class AnimationManager {
 
     /**
      * Sets property values after the animation is executed. Returns the reference to this (AnimationManager).
-     * @param {string} _targets - Targets as a Node List.
+     * @param {HTMLElement} _targets - Targets as a Node List.
      * @param {object} _rules - Rules to be applied as an Object.
      * @param {object} _options - Options to be applied as an Object.
      * @param {number} _options.timeout - Time in miliseconds before the animation starts (100 by default).
      * @param {number} _options.delay - Time in miliseconds between the execution of the animation between targets (300 by default).
-     * @param {number} _options.rootMargin - Margin around the root in an IntersectionObserver (read more about opitons in IntersectionObserver) ("100px 0px 100px 0px" by default).
+     * @param {number} _options.rootMargin - Read more about rootMargin in IntersectionObserver ("100px 0px 100px 0px" by default).
+     * @param {number} _options.threshold - Read more about threshold in IntersectionObserver (0 by default).
      * @param {number} _options.ease - A css easing function for the animation (ease-in-out by default).
      * @param {number} _options.duration - Duration of the animation in miliseconds (600 by default).
      * @param {number} _options.executeForAll - Execute the animation for all elements after at least one element is intersecting (false by default).
-     * @param {number} _options.classToAdd - Add a class after the animation has stared (null by default).
+     * @param {number} _options.classToAdd - Add a class after the animation has stared (null by default). Define a keyframe class in animationManager.css.
      */
     to = (_targets, _rules, _options) => {
         const targets = [..._targets];
@@ -48,6 +49,7 @@ class AnimationManager {
             timeout: 100,
             delay: 300,
             rootMargin: "100px 0px 100px 0px",
+            threshold: 0,
             ease: 'ease-in-out',
             duration: 600,
             executeForAll: false,
@@ -113,6 +115,8 @@ class AnimationManager {
                 for (const key in _rules) {
                     _targets[numberOfTargetsAnimated].style[key] = _rules[key];
                 }
+
+                _targets[numberOfTargetsAnimated].classList.remove('zeroOpacity');
 
                 numberOfTargetsAnimated++;
             }
